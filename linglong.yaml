@@ -1,0 +1,32 @@
+package:
+  id: libxtst
+  name: libxtst
+  version: 5.5.15
+  kind: lib
+  description: |
+    libxtst.
+
+runtime:
+  id: org.deepin.Runtime
+  version: 20.5.0
+
+source:
+  kind: git
+  url: https://github.com/deepin-community/libxtst.git
+  version: master
+  commit: c91077333574649666ff0334c45afbb6f34aa538
+
+  patch:
+  - 01_fix_date_in_manpages.diff
+build:
+  kind: manual
+  manual:
+    configure: |
+      #exec bash
+      mkdir build
+      cd build
+      cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+            -DCMAKE_INSTALL_LIBDIR=${PREFIX}/lib \
+            -DKDE_INSTALL_USE_QT_SYS_PATHS=ON ..
+      make -j
+      make -j install
